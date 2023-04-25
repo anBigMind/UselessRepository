@@ -8,15 +8,19 @@ public class StudentSysDB {
     private Student[] students = new Student[5];
     private Major[] majors = new Major[5];
     private Admin[] admins = new Admin[5];
+    private static StudentSysDB sysDB = new StudentSysDB();
 
 ////////////////////////////////constructor///////////////////////////////////
-    public StudentSysDB() {
+    private StudentSysDB() {
         initStudent();
         initMajor();
         initAdmin();
     }
 
     ////////////////////////////gettet&setter////////////////////////////////
+    public static StudentSysDB getInstance(){//单例模式
+        return sysDB;
+    }
 
     public Student[] getStudents() {
         return students;
@@ -59,8 +63,8 @@ public class StudentSysDB {
 
     private void initStudent() {
         students[0] = new Student(1,"john","male",20,"12345678909","firststreet",1);
-        students[0] = new Student(2,"rachel","female",21,"08765432122","firststreet",2);
-        students[0] = new Student(3,"ashily","female",22,"34567899876","firststreet",3);
-        students[0] = new Student(4,"donald","male",23,"96736732345","firststreet",4);
+        students[1] = new Student(2,"rachel","female",21,"08765432122","firststreet",2);
+        students[2] = new Student(3,"ashily","female",22,"34567899876","firststreet",3);
+        students[3] = new Student(4,"donald","male",23,"96736732345","firststreet",4);
     }
 }

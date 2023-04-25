@@ -1,5 +1,9 @@
 package com.oracle.ui;
 
+import com.oracle.service.AdminService;
+import com.oracle.service.MajorService;
+import com.oracle.service.StudentService;
+
 import java.util.Scanner;
 
 /**
@@ -7,6 +11,9 @@ import java.util.Scanner;
  */
 public class StudentSysUI {
     Scanner input = new Scanner(System.in);
+    MajorService majorService = new MajorService();
+    StudentService studentService = new StudentService();
+    AdminService adminService = new AdminService();
 
     //////////////////////////唯一登录菜单///////////////////////////////
     /**
@@ -18,11 +25,18 @@ public class StudentSysUI {
         System.out.println("===============================");
         System.out.println("\t\t后台管理员登录");
         System.out.println("===============================");
-        System.out.println("请输入管理员名称：");
-        String userName = input.next();
-        System.out.println("请输入密码：");
-        String password = input.next();
-        // TODO: 2023/4/22 调用管理员的业务，实现登录
+        do {
+            System.out.println("请输入管理员名称：");
+            String userName = input.next();
+            System.out.println("请输入密码：");
+            String password = input.next();
+            if (adminService.verifyAdmin(userName,password) == false){
+                System.out.println("用户名或密码错误，请重新输入");
+                continue;
+            }
+            System.out.println("登录成功!");
+            break;
+        }while (true);
         mainMenu();//后台主界面菜单
     }
 
@@ -80,12 +94,16 @@ public class StudentSysUI {
             String c = input.next();
             switch (c){
                 case "1":
+                    majorService.printAllMajorList();
                     continue;
                 case "2":
+                    majorService.addMajor();
                     continue;
                 case "3":
+                    majorService.modifyMajor();
                     continue;
                 case "4":
+                    majorService.delMajor();
                     continue;
                 case "0":
                     break;
@@ -113,12 +131,16 @@ public class StudentSysUI {
             String c = input.next();
             switch (c){
                 case "1":
+                    studentService.printAllStudentList();
                     continue;
                 case "2":
+                    studentService.addStudent();
                     continue;
                 case "3":
+                    studentService.modifyStudent();
                     continue;
                 case "4":
+                    studentService.delStudent();
                     continue;
                 case "0":
                     break;
@@ -146,12 +168,16 @@ public class StudentSysUI {
             String c = input.next();
             switch (c){
                 case "1":
+                    adminService.printAllAdminList();
                     continue;
                 case "2":
+                    adminService.addAdmin();
                     continue;
                 case "3":
+                    adminService.modifyAdmin();
                     continue;
                 case "4":
+                    adminService.delAdmin();
                     continue;
                 case "0":
                     break;
