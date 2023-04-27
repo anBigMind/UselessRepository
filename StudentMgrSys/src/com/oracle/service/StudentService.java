@@ -106,7 +106,94 @@ public class StudentService {
         }
     }
 
+    /**
+     * 根据姓氏打印学生列表的方法
+     */
+    public void printStudentByLastName() {
+        System.out.println("请输入要查看的姓氏");
+        char name = input.next().charAt(0);
+        System.out.println("----------------------------------------学生列表-------------------------------------------");
+        for (Student student:sysDB.getStudents()) {
+            if (student != null){
+                if (student.getName().charAt(0)== name){
+                    System.out.println("学号：" + student.getId() + "\t姓名：" + student.getName() + "\t年龄" + student.getAge() +
+                            "\t性别：" + student.getSex() + "\t专业编号：" + student.getMajorId() + "\t地址：" + student.getAddress() +
+                            "\t电话：" + student.getPhone());
+                }
+            }
+        }
+        System.out.println("------------------------------------------------------------------------------------------");
+    }
 
+    /**
+     * 根据性别打印学生列表
+     */
+    public void printStudentByGender() {
+        System.out.println("请选择要查看的性别：1.男 2.女");
+        String c = input.next();
+        System.out.println("----------------------------------------学生列表-------------------------------------------");
+        switch (c){
+            case "1":
+                for (Student student:sysDB.getStudents()) {
+                    if (student != null){
+                        if ("男".equals(student.getSex())){
+                            System.out.println("学号：" + student.getId() + "\t姓名：" + student.getName() + "\t年龄" + student.getAge() +
+                                    "\t性别：" + student.getSex() + "\t专业编号：" + student.getMajorId() + "\t地址：" + student.getAddress() +
+                                    "\t电话：" + student.getPhone());
+                        }
+                    }
+                }
+                break;
+            case "2":
+                for (Student student:sysDB.getStudents()) {
+                    if (student != null){
+                        if ("男".equals(student.getSex())){
+                            System.out.println("学号：" + student.getId() + "\t姓名：" + student.getName() + "\t年龄" + student.getAge() +
+                                    "\t性别：" + student.getSex() + "\t专业编号：" + student.getMajorId() + "\t地址：" + student.getAddress() +
+                                    "\t电话：" + student.getPhone());
+                        }
+                    }
+                }
+                break;
+            default:
+                System.out.println("输入错误，无法查询");
+        }
+        System.out.println("------------------------------------------------------------------------------------------");
+    }
+
+    /**
+     * 根据年级打印学生列表
+     */
+    public void printStudentByGrade() {
+        System.out.println("请选择要查看的专业编号");
+        int id = input.nextInt();
+        System.out.println("----------------------------------------学生列表-------------------------------------------");
+        for (Student student:sysDB.getStudents()) {
+            if (student != null){
+                if (student.getMajorId() == id){
+                    System.out.println("学号：" + student.getId() + "\t姓名：" + student.getName() + "\t年龄" + student.getAge() +
+                            "\t性别：" + student.getSex() + "\t专业编号：" + student.getMajorId() + "\t地址：" + student.getAddress() +
+                            "\t电话：" + student.getPhone());
+                }
+            }
+        }
+        System.out.println("------------------------------------------------------------------------------------------");
+    }
+
+
+    /**
+     * 计算学生总数
+     * @return 学生的总数
+     */
+    public int countStudentsAmount() {
+        int c = 0;
+        for (Student student: sysDB.getStudents()) {
+            if (student != null){
+                c++;
+            }
+        }
+        return c;
+    }
     //////////////////////////////////private methods///////////////////////////////
     /**
      * 查看该学生是否存在
@@ -124,19 +211,6 @@ public class StudentService {
         return false;
     }
 
-    /**
-     * 计算学生总数
-     * @return 学生的总数
-     */
-    private int countStudentsAmount() {
-        int c = 0;
-        for (Student student: sysDB.getStudents()) {
-            if (student != null){
-                c++;
-            }
-        }
-        return c;
-    }
 
     /**
      * 根据编号查找学生
@@ -169,4 +243,7 @@ public class StudentService {
         }
         sysDB.getStudents()[i] = null;
     }
+
+
+
 }

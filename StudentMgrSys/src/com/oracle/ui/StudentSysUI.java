@@ -25,9 +25,10 @@ public class StudentSysUI {
         System.out.println("===============================");
         System.out.println("\t\t后台管理员登录");
         System.out.println("===============================");
+        String userName;
         do {
             System.out.println("请输入管理员名称：");
-            String userName = input.next();
+            userName = input.next();
             System.out.println("请输入密码：");
             String password = input.next();
             if (adminService.verifyAdmin(userName,password) == false){
@@ -37,19 +38,23 @@ public class StudentSysUI {
             System.out.println("登录成功!");
             break;
         }while (true);
-        mainMenu();//后台主界面菜单
+        mainMenu(userName);//后台主界面菜单
     }
 
 //////////////////////////////一级菜单/////////////////////////////////
     /**
      * 后台主界面菜单
      */
-    private void mainMenu() {
+    private void mainMenu(String userName) {
         do {
+            System.out.println("===============================");
+            System.out.println("欢迎"+userName+"，目前有学生"+studentService.countStudentsAmount()+
+                    "人，专业"+majorService.countMajorAmount()+"种");
             System.out.println("===============================");
             System.out.println("\t1.专业管理");
             System.out.println("\t2.学生管理");
             System.out.println("\t3.管理员管理");
+            System.out.println("\t4.修改密码");
             System.out.println("\t0.退出登录");
             System.out.println("===============================");
             System.out.println("请选择：");
@@ -63,6 +68,9 @@ public class StudentSysUI {
                     continue;
                 case "3":
                     adminMgrMenu();//管理员管理菜单
+                    continue;
+                case "4":
+                    majorService.changePassword(userName);
                     continue;
                 case "0":
                     System.out.println("退出登录");
@@ -122,9 +130,12 @@ public class StudentSysUI {
         do {
             System.out.println("------------学生管理-----------");
             System.out.println("\t1.查看所有学生");
-            System.out.println("\t2.添加学生");
-            System.out.println("\t3.修改学生");
-            System.out.println("\t4.删除学生");
+            System.out.println("\t2.根据姓氏查看学生");
+            System.out.println("\t3.根据性别查看学生");
+            System.out.println("\t4.根据专业查看学生");
+            System.out.println("\t5.添加学生");
+            System.out.println("\t6.修改学生");
+            System.out.println("\t7.删除学生");
             System.out.println("\t0.返回");
             System.out.println("------------------------------");
             System.out.println("请选择");
@@ -134,12 +145,21 @@ public class StudentSysUI {
                     studentService.printAllStudentList();
                     continue;
                 case "2":
-                    studentService.addStudent();
+                    studentService.printStudentByLastName();
                     continue;
                 case "3":
-                    studentService.modifyStudent();
+                    studentService.printStudentByGender();
                     continue;
                 case "4":
+                    studentService.printStudentByGrade();
+                    continue;
+                case "5":
+                    studentService.addStudent();
+                    continue;
+                case "6":
+                    studentService.modifyStudent();
+                    continue;
+                case "7":
                     studentService.delStudent();
                     continue;
                 case "0":

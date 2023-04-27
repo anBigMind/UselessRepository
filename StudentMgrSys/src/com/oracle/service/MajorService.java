@@ -1,6 +1,8 @@
 package com.oracle.service;
 
+import com.oracle.entity.Admin;
 import com.oracle.entity.Major;
+import com.oracle.entity.Student;
 import com.oracle.studentSysDB.StudentSysDB;
 
 import java.util.Scanner;
@@ -90,8 +92,46 @@ public class MajorService {
         }
     }
 
+    /**
+     * 更改管理员密码
+     */
+    public void changePassword(String userName) {
+        System.out.println("请输入原密码");
+        String pw = input.next();
+        for (int i = 0; i < sysDB.getAdmins().length; i++) {
+            if (sysDB.getAdmins()[i] != null){
+                if ((sysDB.getAdmins()[i].getName().equals(userName)) && (sysDB.getAdmins()[i].getPassword().equals(pw))){
+                    System.out.println("请输入要更改的密码");
+                    String pw1 = input.next();
+                    System.out.println("请再次输入密码");
+                    String pw2 = input.next();
+                    if (pw1.equals(pw2)){
+                        sysDB.getAdmins()[i].setPassword(pw1);
+                        System.out.println("修改成功！");
+                        return;
+                    }else {
+                        System.out.println("输入错误，修改失败");
+                        return;
+                    }
+                }
+            }
+        }
+        System.out.println("密码错误");
+    }
 
-
+    /**
+     * 计算已有专业总数
+     * @return 专业总数
+     */
+    public int countMajorAmount() {
+        int c = 0;
+        for (Major major: sysDB.getMajors()) {
+            if (major != null){
+                c++;
+            }
+        }
+        return c;
+    }
     ///////////////////////private methods//////////////////////////
     /**
      * 计算专业数量
