@@ -29,7 +29,7 @@ public class MajorService {
      * 添加专业的方法
      */
     public void addMajor() {
-        if (sysDB.getMajors().length == countMajorsAmount()){
+        if (sysDB.getMajors().length == countMajorAmount()){
             System.out.println("专业已满，无法添加新专业");
             return;
         }
@@ -44,7 +44,7 @@ public class MajorService {
         }while (true);
         for (int i = 0; i < sysDB.getMajors().length; i++) {
             if (sysDB.getMajors()[i] == null){
-                int id = countMajorsAmount()+1;
+                int id = countMajorAmount()+1;
                 sysDB.getMajors()[i] = new Major(id,majorName);
                 System.out.println("添加成功！");
                 break;
@@ -133,19 +133,6 @@ public class MajorService {
         return c;
     }
     ///////////////////////private methods//////////////////////////
-    /**
-     * 计算专业数量
-     * @return 已有专业的数量
-     */
-    private int countMajorsAmount() {
-        int c = 0;
-        for (Major major: sysDB.getMajors()) {
-            if (major != null){
-                c++;
-            }
-        }
-        return c;
-    }
 
     /**
      * 查看专业名称是否已存在

@@ -64,7 +64,7 @@ public class StudentSysDB {
     private void initStudent() {
         students[0] = new Student(1,"john","male",20,"12345678909","firststreet",1);
         students[1] = new Student(2,"rachel","female",21,"08765432122","firststreet",2);
-        students[2] = new Student(3,"ashily","female",22,"34567899876","firststreet",3);
+        students[2] = new Student(3,"doly","female",22,"34567899876","firststreet",3);
         students[3] = new Student(4,"donald","male",23,"96736732345","firststreet",4);
     }
 }
