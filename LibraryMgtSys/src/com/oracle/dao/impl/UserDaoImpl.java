@@ -105,4 +105,28 @@ public class UserDaoImpl extends BaseDao implements UserDao {
         String sql = "DELETE FROM tb_user WHERE id = ?;";
         return executeUpdate(sql,id);
     }
+
+    @Override
+    public List<User> selectUserByName(String userName) {
+        List<User> userList = new ArrayList<>();
+        String sql = "SELECT * FROM tb_user WHERE user_name LIKE ?;";
+        userName = "%"+userName+"%";
+        ResultSet rs = this.executeQuery(sql,userName);
+        User user = null;
+        try {
+            while (rs.next()){
+                user = new User();
+                user.setId(rs.getInt("id"));
+                user.setUserName(rs.getString("user_name"));
+                user.setPassword(rs.getString("password"));
+                user.setRecordNum(rs.getInt("record_num"));
+                userList.add(user);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            closeAll(rs,ps,conn);
+        }
+        return userList;
+    }
 }

@@ -93,4 +93,14 @@ public class UserServiceImpl implements UserService {
     public int deleteUserById(int id) {
         return userDao.deleteUserById(id);
     }
+
+    /**
+     * 根据用户名模糊查询用户
+     * @param userName
+     * @return 查询到的用户集合
+     */
+    @Override
+    public List<User> getUserByName(String userName) {
+        return userDao.selectUserByName(userName);
+    }
 }

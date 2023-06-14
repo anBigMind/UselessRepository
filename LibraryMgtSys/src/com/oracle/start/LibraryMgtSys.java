@@ -26,7 +26,10 @@ public class LibraryMgtSys {
         String c;
         do {
             System.out.println("===============================");
-            System.out.println("\t欢迎来到图书馆管理系统");
+            System.out.println(
+                    "\t  ╦  ┬┌┐ ┬─┐┌─┐┬─┐┬ ┬\n" +
+                    "\t  ║  │├┴┐├┬┘├─┤├┬┘└┬┘\n" +
+                    "\t  ╩═╝┴└─┘┴└─┴ ┴┴└─ ┴ ");
             System.out.println("===============================");
             System.out.println("------------选择登录------------");
             System.out.println("1.图书管理员登录");
@@ -488,6 +491,7 @@ public class LibraryMgtSys {
             res = bookService.deleteBookByIsbn(isbn);
         } catch (Exception e) {
             System.out.println("该图书还有人正在借阅，无法删除");
+            return;
         }
         if (res>0){
             System.out.println("删除成功");
@@ -504,9 +508,10 @@ public class LibraryMgtSys {
         do {
             System.out.println("-----------用户管理菜单----------");
             System.out.println("1.查看所有用户信息");
-            System.out.println("2.重置用户密码");
-            System.out.println("3.新增用户");
-            System.out.println("4.删除用户");
+            System.out.println("2.根据名称查看用户");
+            System.out.println("3.重置用户密码");
+            System.out.println("4.新增用户");
+            System.out.println("5.删除用户");
             System.out.println("0.返回");
             System.out.println("-------------------------------");
             System.out.println("请选择");
@@ -516,12 +521,15 @@ public class LibraryMgtSys {
                     printAllUsers();
                     continue;
                 case "2":
-                    resetUserPassword();
+                    searchUserByName();
                     continue;
                 case "3":
-                    addUser();
+                    resetUserPassword();
                     continue;
                 case "4":
+                    addUser();
+                    continue;
+                case "5":
                     deleteUser();
                     continue;
                 case "0":
@@ -531,6 +539,15 @@ public class LibraryMgtSys {
             }
             break;
         }while (true);
+    }
+
+    /**
+     * 根据名称查询用户（模糊查询）
+     */
+    private void searchUserByName() {
+        System.out.println("请输入要查看的用户名称(模糊查询)");
+        String userName = input.next();
+        printUserList(userService.getUserByName(userName));
     }
 
     /**
@@ -652,8 +669,12 @@ public class LibraryMgtSys {
      */
     private void printAllUsers() {
         List<User> allUsers = userService.getAllUsers();
+        printUserList(allUsers);
+    }
+
+    private void printUserList(List<User> allUsers) {
         if (allUsers != null){
-            for (User user:allUsers) {
+            for (User user: allUsers) {
                 showUserInfo(user);
             }
         }

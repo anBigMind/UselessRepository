@@ -54,4 +54,11 @@ public interface UserService {
      * @return 影响行数
      */
     int deleteUserById(int id);
+
+    /**
+     * 根据用户名模糊查询用户
+     * @param userName
+     * @return 查询到的用户集合
+     */
+    List<User> getUserByName(String userName);
 }

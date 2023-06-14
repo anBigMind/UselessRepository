@@ -8,7 +8,7 @@ import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
 
-public class BaseDao {
+public class BaseDao implements AutoCloseable{
     /*private static String driver;
     private static String url;
     private static String user;
@@ -40,7 +40,7 @@ public class BaseDao {
      * 获得连接的方法
      * @return 连接对象
      */
-    public Connection getConnection(){
+    protected Connection getConnection(){
         try {
             if (conn == null || conn.isClosed())
                 conn = dataSource.getConnection();
@@ -56,7 +56,7 @@ public class BaseDao {
      * @param objects 可变参数，代表占位符对应的值
      * @return 影响行数
      */
-    public int executeUpdate(String sql,Object...objects){
+    protected int executeUpdate(String sql,Object...objects){
         int n = -1;
         conn = getConnection();
         try {
@@ -78,7 +78,7 @@ public class BaseDao {
      * @param sm 执行器对象
      * @param con 连接对象
      */
-    public void closeAll(ResultSet rs, Statement sm, Connection con){
+    protected void closeAll(ResultSet rs, Statement sm, Connection con){
         try {
             if (rs!=null) rs.close();
             if (sm!=null) sm.close();
@@ -87,7 +87,7 @@ public class BaseDao {
             throw new RuntimeException(e);
         }
     }
-    public ResultSet executeQuery(String sql,Object...objects){
+    protected ResultSet executeQuery(String sql,Object...objects){
         conn = getConnection();
         ResultSet rs = null;
         try {
@@ -100,5 +100,15 @@ public class BaseDao {
             throw new RuntimeException(e);
         }
         return rs;
+    }
+
+    @Override
+    public void close() throws Exception {
+        try {
+            if (this.ps!=null) ps.close();
+            if (conn!=null) conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

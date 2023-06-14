@@ -47,4 +47,6 @@ public interface UserDao {
      * @return 影响行数
      */
     int deleteUserById(int id);
+
+    List<User> selectUserByName(String userName);
 }
