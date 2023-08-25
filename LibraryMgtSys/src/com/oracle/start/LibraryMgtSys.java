@@ -45,7 +45,10 @@ public class LibraryMgtSys {
                     String adminName = input.next();
                     System.out.println("请输入密码");
                     String adminPassword = input.next();
+                    long start = System.currentTimeMillis();
                     Admin admin = adminService.adminLogin(adminName,adminPassword);
+                    long end = System.currentTimeMillis();
+                    System.out.println(end-start);
                     if (admin != null)
                         adminMainMenu(admin);
                     else

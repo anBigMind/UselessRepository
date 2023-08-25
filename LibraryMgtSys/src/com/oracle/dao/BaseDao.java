@@ -103,7 +103,7 @@ public class BaseDao implements AutoCloseable{
     }
 
     @Override
-    public void close() throws Exception {
+    public void close(){
         try {
             if (this.ps!=null) ps.close();
             if (conn!=null) conn.close();
